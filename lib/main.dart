@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_b3/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   void _toggleProjects() {
     setState(() {
-      _showProjects = !_showProjects; // Change l'état pour afficher/masquer les projets
+      _showProjects =
+          !_showProjects; // Change l'état pour afficher/masquer les projets
     });
   }
 
@@ -54,14 +56,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   titleTextStyle: const TextStyle(
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
-                  backgroundColor: const Color.fromARGB(255, 0, 89, 170),
+                  backgroundColor: primaryColor,
                 ),
               ),
               Positioned(
                 left: MediaQuery.of(context).size.width / 2 - 53,
                 child: const CircleAvatar(
                   radius: 55,
-                  backgroundColor: Color.fromARGB(255, 0, 89, 170),
+                  backgroundColor: primaryColor,
                   child: CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage('pp.png'),
@@ -73,10 +75,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           const SizedBox(height: 70),
           const Text(
             "Bienvenue sur mon Portfolio !",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
           Row(
@@ -85,7 +84,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               ElevatedButton(
                 onPressed: _toggleProjects,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 0, 89, 170),
+                  backgroundColor: const Color.fromARGB(255, 51, 117, 192),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
@@ -100,7 +99,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 0, 89, 170),
+                  backgroundColor: primaryColor,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
@@ -133,16 +132,22 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      color: secondaryColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: ListTile(
         title: Text(
           projectName,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
-        subtitle: const Text("Description du projet ici."),
-        trailing: const Icon(Icons.arrow_forward),
+        subtitle: Text(
+          "Description du projet ici.",
+          style: const TextStyle(color: Colors.white),
+        ),
+        trailing: const Icon(Icons.arrow_forward,
+        color: Colors.white),
         onTap: () {
           // Action à effectuer lorsqu'on clique sur la carte
         },
