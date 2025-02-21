@@ -158,7 +158,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                         backgroundColor: primaryColor,
                         child: CircleAvatar(
                           radius: 40,
-                          backgroundImage: AssetImage('pp.png'),
+                          backgroundImage: AssetImage('/images/pp.png'),
                         ),
                       ),
                     ),
@@ -250,19 +250,19 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       _buildProjectCard(
                         "GameChamp",
                         "Description du Projet 1",
-                        'project1.png',
+                        'images/project1.png',
                         "https://gamechamp.vercel.app/",
                       ),
                       _buildProjectCard(
                         "CBDlisse",
                         "Description du Projet 2",
-                        'project2.png',
+                        'images/project2.png',
                         "https://cbdlisse.fr/",
                       ),
                       _buildProjectCard(
                         "Balance Ton Spot",
                         "Description du Projet 3",
-                        'project3.png',
+                        'images/project3.png',
                         "https://github.com/AdrienVerwaerde/BalanceTonSpot",
                       ),
                     ],
@@ -275,17 +275,17 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       children: [
                         _buildSocialItem(
                           "GitHub",
-                          "github.png",
+                          "images/github.png",
                           "https://github.com/AdrienVerwaerde",
                         ),
                         _buildSocialItem(
                           "LinkedIn",
-                          "linkedin.png",
+                          "images/linkedin.png",
                           "https://www.linkedin.com/in/adrien-verwaerde-018ba4195/",
                         ),
                         _buildSocialItem(
                           "Discord",
-                          "discord.png",
+                          "images/discord.png",
                           "https://discord.com/users/139466047387336704",
                         ),
                       ],
