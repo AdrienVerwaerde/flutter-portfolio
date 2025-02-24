@@ -122,6 +122,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
             controller: _scrollController,
             child: Column(
               children: [
+                // AppBar and Avatar
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
@@ -170,6 +171,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     ),
                   ],
                 ),
+
+                // Text
                 AnimatedSize(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
@@ -208,10 +211,18 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
-                                      Padding(
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width >
+                                                    1200
+                                                ? MediaQuery.of(
+                                                      context,
+                                                    ).size.width *
+                                                    0.6
+                                                : double.infinity,
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 30.0,
                                           vertical: 10.0,
+                                          horizontal: 30,
                                         ),
                                         child: Text(
                                           AppTexts.desc,
@@ -229,7 +240,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                         ),
                       ),
 
-                      // Boutons
+                      // Buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -279,30 +290,11 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                     ],
                   ),
                 ),
+
+                // Project cards
                 const SizedBox(height: 20),
-                if (_activeSection == "projects")
-                  Column(
-                    children: [
-                      _buildProjectCard(
-                        "GameChamp",
-                        "NextJS, MongoDB",
-                        'assets/images/project1.png',
-                        "https://gamechamp.vercel.app/",
-                      ),
-                      _buildProjectCard(
-                        "CBDlisse",
-                        "Shopify, Liquid, JavaScript",
-                        'assets/images/project2.png',
-                        "https://cbdlisse.fr/",
-                      ),
-                      _buildProjectCard(
-                        "Balance Ton Spot",
-                        "React, TypeScript, MySQL",
-                        'assets/images/project3.png',
-                        "https://github.com/AdrienVerwaerde/BalanceTonSpot",
-                      ),
-                    ],
-                  ),
+                if (_activeSection == "projects") _buildProjectsGrid(),
+                // Socials items
                 if (_activeSection == "socials")
                   Column(
                     children: [
@@ -335,6 +327,8 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               ],
             ),
           ),
+
+          // Footer
           if (_showFooter)
             Positioned(
               bottom: 0,
@@ -371,78 +365,137 @@ class _PortfolioScreenState extends State<PortfolioScreen>
     );
   }
 
+  // Build cards layout
+  Widget _buildProjectsGrid() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        bool isDesktop = constraints.maxWidth > 800;
+        double cardWidth = 372;
+        double cardHeight = 450;
+        double spacing = 20;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: Wrap(
+              spacing: spacing,
+              runSpacing: spacing,
+              alignment: WrapAlignment.center,
+              children: [
+                _buildProjectCard(
+                  "GameChamp",
+                  "NextJS, MongoDB",
+                  "assets/images/project1.png",
+                  "https://gamechamp.vercel.app/",
+                  cardWidth,
+                  cardHeight,
+                ),
+                _buildProjectCard(
+                  "CBDlisse",
+                  "Shopify, Liquid, JavaScript",
+                  "assets/images/project2.png",
+                  "https://cbdlisse.fr/",
+                  cardWidth,
+                  cardHeight,
+                ),
+                _buildProjectCard(
+                  "Balance Ton Spot",
+                  "React, TypeScript, MySQL",
+                  "assets/images/project3.png",
+                  "https://github.com/AdrienVerwaerde/BalanceTonSpot",
+                  cardWidth,
+                  cardHeight,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   // Build project cards
   Widget _buildProjectCard(
     String projectName,
     String projectDescription,
     String imagePath,
     String url,
+    double cardWidth,
+    double cardHeight,
   ) {
     return GestureDetector(
       onTap: () => _launchURL(url),
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: Alignment(0.7, -0.6),
-              radius: 1,
-              colors: [primaryColor, secondaryColor],
-            ),
+      child: SizedBox(
+        width: cardWidth,
+        height: cardHeight,
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      projectName,
-                      style: GoogleFonts.gemunuLibre(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      projectDescription,
-                      style: const TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ],
-                ),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(0.7, -0.6),
+                radius: 1,
+                colors: [primaryColor, secondaryColor],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    imagePath,
-                    height: 320,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        projectName,
+                        style: GoogleFonts.gemunuLibre(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        projectDescription,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () => _launchURL(url),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      AppTexts.seeProject,
-                      style: TextStyle(color: Colors.white),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      imagePath,
+                      height: 320,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
-                    Icon(Icons.arrow_forward, color: Colors.white),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: () => _launchURL(url),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "Voir Projet",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Icon(Icons.arrow_forward, color: Colors.white),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
